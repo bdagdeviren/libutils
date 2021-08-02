@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kube-system
+  name: csideployment
+spec:
+  selector:
+    matchLabels:
+      app: csideployment
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: csideployment
+    spec:
+      containers:
+        - name: csideployment
+          image: csideployment:v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: DEMO_GREETING
+              value: $WORKERNAMES
+            - name: DEMO_FAREWELL
+              value: 192.168.1.11
